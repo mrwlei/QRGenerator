@@ -34,12 +34,8 @@ public class WxUtilEx {
 	private static final String POST_URL_UNIFIEDORDER = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 	private static final String POST_URL_ORDERQUERY = "https://api.mch.weixin.qq.com/pay/orderquery";
 	
-
-	/*
-	private static final String POST_URL_UNIFIEDORDER = "http://localhost:8808/bytsp/mobile_test.jsp?stub=unifiedorder";
-	private static final String POST_URL_ORDERQUERY = "http://localhost:8808/bytsp/mobile_test.jsp?stub=orderquery";
-	*/
-
+	private static final String POST_URL_REFUND = "https://api.mch.weixin.qq.com/secapi/pay/refund";
+	
 	
 	public static void formatMapObject(Map map) {
 
@@ -129,14 +125,7 @@ public class WxUtilEx {
 		return xmlString2Map(str);
 	}
 
-	public static String requestStream2String(HttpServletRequest request) throws Exception {
-		String data = (String) request.getAttribute("request-input-stream");
-
-		System.out.println(">>>>>>> requestStream2String\n" + data);
-		return data;
-	}
-
-	private static String ___requestStream2String___(HttpServletRequest request) throws Exception {
+	private static String requestStream2String(HttpServletRequest request) throws Exception {
 
 		InputStream is = request.getInputStream();
 		String charset = request.getCharacterEncoding();
@@ -182,7 +171,7 @@ public class WxUtilEx {
 		}
 
 		Format format = Format.getPrettyFormat();
-		format.setEncoding(CHARSET);//ÉèÖÃxmlÎÄ¼þµÄ×Ö·ûÎªUTF-8£¬½â¾öÖÐÎÄÎÊÌâ
+		format.setEncoding(CHARSET);//ï¿½ï¿½ï¿½ï¿½xmlï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ÎªUTF-8ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		XMLOutputter xmlout = new XMLOutputter(format);
 		ByteArrayOutputStream bo = new ByteArrayOutputStream();
 		xmlout.output(document, bo);
@@ -212,7 +201,7 @@ public class WxUtilEx {
 		formatMapObject(map);
 		String sign = makeSignWithMd5(map, key);
 
-		map.remove("key");//·ÀÖ¹key±»´æ´¢
+		map.remove("key");//ï¿½ï¿½Ö¹keyï¿½ï¿½ï¿½æ´¢
 		map.put("sign", sign);
 	}
 
@@ -221,7 +210,6 @@ public class WxUtilEx {
 			return true;
 		}
 		return false;
-		//return true;
 	}
 
 	public static boolean checkMapSign(Map map, String key) {
@@ -238,6 +226,10 @@ public class WxUtilEx {
 
 	public static Map postOrderQuery(Map map) throws Exception {
 		return postXmlData(POST_URL_ORDERQUERY, map);
+	}
+	
+	public static Map postOrderRefund(Map map) throws Exception {
+		return postXmlData(POST_URL_REFUND,map);
 	}
 
 	public static Map postXmlData(String url, Map map) throws Exception {
