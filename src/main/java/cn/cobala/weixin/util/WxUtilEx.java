@@ -36,6 +36,29 @@ public class WxUtilEx {
 	
 	private static final String POST_URL_REFUND = "https://api.mch.weixin.qq.com/secapi/pay/refund";
 	
+	/**
+	 * 统一下单
+	 * @throws Exception
+	 */
+	public static Map postUnifiedOrder(Map map) throws Exception {
+		return postXmlData(POST_URL_UNIFIEDORDER, map);
+	}
+	
+	/**
+	 * 订单查询
+	 * @throws Exception
+	 */
+	public static Map postOrderQuery(Map map) throws Exception {
+		return postXmlData(POST_URL_ORDERQUERY, map);
+	}
+	
+	/**
+	 * 退款
+	 * @throws Exception
+	 */
+	public static Map postOrderRefund(Map map) throws Exception {
+		return postXmlData(POST_URL_REFUND,map);
+	}
 	
 	public static void formatMapObject(Map map) {
 		Set es = map.entrySet();
@@ -216,18 +239,6 @@ public class WxUtilEx {
 		String new_sign = makeSignWithMd5(map, key);
 
 		return compareSign(new_sign, old_sign);
-	}
-
-	public static Map postUnifiedOrder(Map map) throws Exception {
-		return postXmlData(POST_URL_UNIFIEDORDER, map);
-	}
-
-	public static Map postOrderQuery(Map map) throws Exception {
-		return postXmlData(POST_URL_ORDERQUERY, map);
-	}
-	
-	public static Map postOrderRefund(Map map) throws Exception {
-		return postXmlData(POST_URL_REFUND,map);
 	}
 
 	public static Map postXmlData(String url, Map map) throws Exception {
