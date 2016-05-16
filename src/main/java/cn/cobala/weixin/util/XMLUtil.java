@@ -17,6 +17,7 @@ import org.jdom.input.SAXBuilder;
  * @author miklchen
  *
  */
+@SuppressWarnings("all")
 public class XMLUtil {
 
 	/**

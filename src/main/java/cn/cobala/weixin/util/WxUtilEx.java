@@ -26,7 +26,7 @@ import org.jdom.output.XMLOutputter;
 
 import cn.cobala.weixin.client.TenpayHttpClient;
 
-
+@SuppressWarnings("all")
 public class WxUtilEx {
 
 	public static final String CHARSET = "UTF-8";

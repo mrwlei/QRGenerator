@@ -36,6 +36,7 @@ import com.google.gson.reflect.TypeToken;
  'getDebugInfo(),获取debug信息
  '============================================================================
  '*/
+@SuppressWarnings("all")
 public class RequestHandler {
 	/** Token获取网关地址地址 */
 	private String tokenUrl;

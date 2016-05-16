@@ -26,6 +26,7 @@ import cn.cobala.weixin.util.XMLUtil;
  *  isTenpaySign(),是否财付通签名,true:是 false:否
  *   getDebugInfo(),获取debug信息
  */
+@SuppressWarnings("all")
 public class ResponseHandler {
 
 	/** 密钥 */

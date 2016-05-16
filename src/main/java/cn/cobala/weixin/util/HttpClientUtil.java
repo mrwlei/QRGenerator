@@ -32,6 +32,7 @@ import javax.net.ssl.TrustManagerFactory;
  * @author miklchen
  *
  */
+@SuppressWarnings("all")
 public class HttpClientUtil {
 	
 	public static final String SunX509 = "SunX509";
