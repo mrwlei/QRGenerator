@@ -62,7 +62,12 @@ public class QRGenerator {
 	}
 	
 	
-	
+	/**
+	 * 二维码图片以字节数组的方式返回
+	 * @return byte[]
+	 * @throws WriterException
+	 * @throws IOException
+	 */
 	public byte[] generateQRToByteAraay() throws WriterException, IOException {
 		Map<EncodeHintType, Object> hints = new HashMap<EncodeHintType, Object>();
 		// 指定纠错等级,纠错级别（L 7%、M 15%、Q 25%、H 30%）  
@@ -86,7 +91,12 @@ public class QRGenerator {
 		return MatrixToImageWriter.writeToByteArray(bitMatrix, format, logoClassPathURL);
 	}
 	
-	
+	/**
+	 * 二维码图片以File的方式保存到磁盘的指定位置
+	 * @return byte[]
+	 * @throws WriterException
+	 * @throws IOException
+	 */
 	public void generateQRToFile(File file) throws IOException, WriterException {
 		Map<EncodeHintType, Object> hints = new HashMap<EncodeHintType, Object>();
 		// 指定纠错等级,纠错级别（L 7%、M 15%、Q 25%、H 30%）  
@@ -110,7 +120,12 @@ public class QRGenerator {
 		MatrixToImageWriter.writeToFile(bitMatrix, format, file, logoClassPathURL);
 	}
 	
-	
+	/**
+	 * 二维码图片以输出流的方式返回
+	 * @return byte[]
+	 * @throws WriterException
+	 * @throws IOException
+	 */
 	public void generateQRToOutputStream(OutputStream out) throws WriterException, IOException {
 		Map<EncodeHintType, Object> hints = new HashMap<EncodeHintType, Object>();
 		// 指定纠错等级,纠错级别（L 7%、M 15%、Q 25%、H 30%）  
