@@ -17,15 +17,39 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 public class QRGenerator {
 	
-	private String contents; 
-	private String format;
+	private String contents;         //二维码信息
+	private String format = "png";   //二维码图片类型
 	
 	private int width = 400;
 	private int height = 400;
 	
 	private String unicode = "UTF-8";
 	
-	private String logoClassPathURL; //图片logo
+	private String logoClassPathURL; //图片logo的相对路径，添加在classpath下面
+	
+	
+	public QRGenerator(String contents) {
+		this.contents = contents;
+	}
+	
+	public QRGenerator(String contents, String logoClassPathURL) {
+		this.contents = contents;
+		this.logoClassPathURL = logoClassPathURL;
+	}
+	
+	public QRGenerator(String contents, String format, String logoClassPathURL) {
+		this.contents = contents;
+		this.format = format;
+		this.logoClassPathURL = logoClassPathURL;
+	}
+	
+	public QRGenerator(String contents, String format, String unicode,
+			String logoClassPathURL) {
+		this.contents = contents;
+		this.format = format;
+		this.unicode = unicode;
+		this.logoClassPathURL = logoClassPathURL;
+	}
 
 	public QRGenerator(String contents, String format, int width, int height,
 			String unicode, String logoClassPathURL) {
@@ -36,25 +60,8 @@ public class QRGenerator {
 		this.unicode = unicode;
 		this.logoClassPathURL = logoClassPathURL;
 	}
-
-	public QRGenerator(String contents, String format) {
-		this.contents = contents;
-		this.format = format;
-	}
-
-	public QRGenerator(String contents, String format, String unicode,
-			String logoClassPathURL) {
-		this.contents = contents;
-		this.format = format;
-		this.unicode = unicode;
-		this.logoClassPathURL = logoClassPathURL;
-	}
-
-	public QRGenerator(String contents, String format, String logoClassPathURL) {
-		this.contents = contents;
-		this.format = format;
-		this.logoClassPathURL = logoClassPathURL;
-	}
+	
+	
 	
 	public byte[] generateQRToByteAraay() throws WriterException, IOException {
 		Map<EncodeHintType, Object> hints = new HashMap<EncodeHintType, Object>();
