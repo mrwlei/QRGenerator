@@ -32,6 +32,12 @@ public class QRGenerator {
 		this.contents = contents;
 	}
 	
+	public QRGenerator(String contents,int width,int height) {
+		this.contents = contents;
+		this.width = width;
+		this.height = height;
+	}
+	
 	public QRGenerator(String contents, String logoClassPathURL) {
 		this.contents = contents;
 		this.logoClassPathURL = logoClassPathURL;
