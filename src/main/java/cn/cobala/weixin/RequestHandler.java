@@ -20,41 +20,41 @@ import com.google.gson.reflect.TypeToken;
 
 
 /*
- 'Î¢ĞÅÖ§¸¶·şÎñÆ÷Ç©ÃûÖ§¸¶ÇëÇóÇëÇóÀà
+ 'å¾®ä¿¡æ”¯ä»˜æœåŠ¡å™¨ç­¾åæ”¯ä»˜è¯·æ±‚è¯·æ±‚ç±»
  '============================================================================
- 'apiËµÃ÷£º
+ 'apiè¯´æ˜ï¼š
  'init(app_id, app_secret, partner_key, app_key);
- '³õÊ¼»¯º¯Êı£¬Ä¬ÈÏ¸øÒ»Ğ©²ÎÊı¸³Öµ£¬Èçcmdno,dateµÈ¡£
- 'setKey(key_)'ÉèÖÃÉÌ»§ÃÜÔ¿
- 'getLasterrCode(),»ñÈ¡×îºó´íÎóºÅ
- 'GetToken();»ñÈ¡Token
- 'getTokenReal();Token¹ıÆÚºóÊµÊ±»ñÈ¡Token
- 'createMd5Sign(signParams);Éú³ÉMd5Ç©Ãû
- 'genPackage(packageParams);»ñÈ¡package°ü
- 'createSHA1Sign(signParams);´´½¨Ç©ÃûSHA1
- 'sendPrepay(packageParams);Ìá½»Ô¤Ö§¸¶
- 'getDebugInfo(),»ñÈ¡debugĞÅÏ¢
+ 'åˆå§‹åŒ–å‡½æ•°ï¼Œé»˜è®¤ç»™ä¸€äº›å‚æ•°èµ‹å€¼ï¼Œå¦‚cmdno,dateç­‰ã€‚
+ 'setKey(key_)'è®¾ç½®å•†æˆ·å¯†é’¥
+ 'getLasterrCode(),è·å–æœ€åé”™è¯¯å·
+ 'GetToken();è·å–Token
+ 'getTokenReal();Tokenè¿‡æœŸåå®æ—¶è·å–Token
+ 'createMd5Sign(signParams);ç”ŸæˆMd5ç­¾å
+ 'genPackage(packageParams);è·å–packageåŒ…
+ 'createSHA1Sign(signParams);åˆ›å»ºç­¾åSHA1
+ 'sendPrepay(packageParams);æäº¤é¢„æ”¯ä»˜
+ 'getDebugInfo(),è·å–debugä¿¡æ¯
  '============================================================================
  '*/
 public class RequestHandler {
-	/** Token»ñÈ¡Íø¹ØµØÖ·µØÖ· */
+	/** Tokenè·å–ç½‘å…³åœ°å€åœ°å€ */
 	private String tokenUrl;
-	/** Ô¤Ö§¸¶Íø¹ØurlµØÖ· */
+	/** é¢„æ”¯ä»˜ç½‘å…³urlåœ°å€ */
 	private String gateUrl;
-	/** ²éÑ¯Ö§¸¶Í¨ÖªÍø¹ØURL */
+	/** æŸ¥è¯¢æ”¯ä»˜é€šçŸ¥ç½‘å…³URL */
 	private String notifyUrl;
-	/** ÉÌ»§²ÎÊı */
+	/** å•†æˆ·å‚æ•° */
 	private String appid;
 	private String appkey;
 	private String partnerkey;
 	private String appsecret;
 	private String key;
-	/** ÇëÇóµÄ²ÎÊı */
+	/** è¯·æ±‚çš„å‚æ•° */
 	private SortedMap parameters;
 	/** Token */
 	private String Token;
 	private String charset;
-	/** debugĞÅÏ¢ */
+	/** debugä¿¡æ¯ */
 	private String debugInfo;
 	private String last_errcode;
 
@@ -63,7 +63,7 @@ public class RequestHandler {
 	private HttpServletResponse response;
 
 	/**
-	 * ³õÊ¼¹¹Ôìº¯Êı¡£
+	 * åˆå§‹æ„é€ å‡½æ•°ã€‚
 	 * 
 	 * @return
 	 */
@@ -74,16 +74,16 @@ public class RequestHandler {
 		this.response = response;
 		this.charset = "GBK";
 		this.parameters = new TreeMap();
-		// »ñÈ¡TokenÍø¹Ø
+		// è·å–Tokenç½‘å…³
 		tokenUrl = "https://api.weixin.qq.com/cgi-bin/token";
-		// Ìá½»Ô¤Ö§¸¶µ¥Íø¹Ø
+		// æäº¤é¢„æ”¯ä»˜å•ç½‘å…³
 		gateUrl = "https://api.weixin.qq.com/pay/genprepay";
-		// ÑéÖ¤notifyÖ§¸¶¶©µ¥Íø¹Ø
+		// éªŒè¯notifyæ”¯ä»˜è®¢å•ç½‘å…³
 		notifyUrl = "https://gw.tenpay.com/gateway/simpleverifynotifyid.xml";
 	}
 
 	/**
-	 * ³õÊ¼»¯º¯Êı¡£
+	 * åˆå§‹åŒ–å‡½æ•°ã€‚
 	 */
 	public void init(String app_id, String app_secret, String app_key,
 			String partner, String key) {
@@ -101,24 +101,24 @@ public class RequestHandler {
 	}
 
 	/**
-	 * »ñÈ¡×îºó´íÎóºÅ
+	 * è·å–æœ€åé”™è¯¯å·
 	 */
 	public String getLasterrCode() {
 		return last_errcode;
 	}
 
 	/**
-	 *»ñÈ¡Èë¿ÚµØÖ·,²»°üº¬²ÎÊıÖµ
+	 *è·å–å…¥å£åœ°å€,ä¸åŒ…å«å‚æ•°å€¼
 	 */
 	public String getGateUrl() {
 		return gateUrl;
 	}
 
 	/**
-	 * »ñÈ¡²ÎÊıÖµ
+	 * è·å–å‚æ•°å€¼
 	 * 
 	 * @param parameter
-	 *            ²ÎÊıÃû³Æ
+	 *            å‚æ•°åç§°
 	 * @return String
 	 */
 	public String getParameter(String parameter) {
@@ -127,14 +127,14 @@ public class RequestHandler {
 	}
 
 	/**
-	 * ÉèÖÃÃÜÔ¿
+	 * è®¾ç½®å¯†é’¥
 	 */
 	public void setKey(String key) {
 		this.key = key;
 	}
 
 	/**
-	 * »ñÈ¡TOKEN£¬Ò»Ìì×î¶à»ñÈ¡200´Î£¬ĞèÒªËùÓĞÓÃ»§¹²ÏíÖµ
+	 * è·å–TOKENï¼Œä¸€å¤©æœ€å¤šè·å–200æ¬¡ï¼Œéœ€è¦æ‰€æœ‰ç”¨æˆ·å…±äº«å€¼
 	 */
 	public String GetToken() {
 		String requestUrl = tokenUrl + "?grant_type=client_credential&appid="
@@ -145,11 +145,11 @@ public class RequestHandler {
 			String res = httpClient.getResContent();
 			Gson gson = new Gson();
 			TreeMap map = gson.fromJson(res, TreeMap.class);
-			// ÔÚÓĞĞ§ÆÚÄÚÖ±½Ó·µ»Øaccess_token
+			// åœ¨æœ‰æ•ˆæœŸå†…ç›´æ¥è¿”å›access_token
 			if (map.containsKey("access_token")) {
 				String s = map.get("access_token").toString();
 			}
-			// Èç¹ûÇëÇó³É¹¦
+			// å¦‚æœè¯·æ±‚æˆåŠŸ
 			if (null != map) {
 				try {
 					if (map.containsKey("access_token")) {
@@ -157,8 +157,8 @@ public class RequestHandler {
 						return this.Token;
 					}
 				} catch (Exception e) {
-					// »ñÈ¡tokenÊ§°Ü
-					System.out.println("Ê§°Ü:" + map.get("errmsg"));
+					// è·å–tokenå¤±è´¥
+					System.out.println("å¤±è´¥:" + map.get("errmsg"));
 				}
 			}
 
@@ -168,13 +168,13 @@ public class RequestHandler {
 	}
 
 	/**
-	 * ÊµÊ±»ñÈ¡token£¬²¢¸üĞÂµ½applicationÖĞ
+	 * å®æ—¶è·å–tokenï¼Œå¹¶æ›´æ–°åˆ°applicationä¸­
 	 */
 	public String getTokenReal() {
 		String requestUrl = tokenUrl + "?grant_type=client_credential&appid="
 				+ appid + "&secret=" + appsecret;
 		try {
-			// ·¢ËÍÇëÇó£¬·µ»Øjson
+			// å‘é€è¯·æ±‚ï¼Œè¿”å›json
 			TenpayHttpClient httpClient = new TenpayHttpClient();
 			httpClient.setReqContent(requestUrl);
 			String resContent = "";
@@ -184,9 +184,9 @@ public class RequestHandler {
 				Map<String, String> map = gson.fromJson(resContent,
 						new TypeToken<Map<String, String>>() {
 						}.getType());
-				// ÅĞ¶Ï·µ»ØÊÇ·ñº¬ÓĞaccess_token
+				// åˆ¤æ–­è¿”å›æ˜¯å¦å«æœ‰access_token
 				if (map.containsKey("access_token")) {
-					// ¸üĞÂapplicationÖµ
+					// æ›´æ–°applicationå€¼
 					Token = map.get("access_token");
 				} else {
 					System.out.println("get token err ,info ="
@@ -201,12 +201,12 @@ public class RequestHandler {
 		return Token;
 	}
 
-	// ÌØÊâ×Ö·û´¦Àí
+	// ç‰¹æ®Šå­—ç¬¦å¤„ç†
 	public String UrlEncode(String src) throws UnsupportedEncodingException {
 		return URLEncoder.encode(src, this.charset).replace("+", "%20");
 	}
 
-	// »ñÈ¡package´ø²ÎÊıµÄÇ©Ãû°ü
+	// è·å–packageå¸¦å‚æ•°çš„ç­¾ååŒ…
 	public String genPackage(SortedMap<String, String> packageParams)
 			throws UnsupportedEncodingException {
 		String sign = createSign(packageParams);
@@ -221,14 +221,14 @@ public class RequestHandler {
 			sb.append(k + "=" + UrlEncode(v) + "&");
 		}
 
-		// È¥µô×îºóÒ»¸ö&
+		// å»æ‰æœ€åä¸€ä¸ª&
 		String packageValue = sb.append("sign=" + sign).toString();
 		System.out.println("packageValue=" + packageValue);
 		return packageValue;
 	}
 
 	/**
-	 * ´´½¨md5ÕªÒª,¹æÔòÊÇ:°´²ÎÊıÃû³Æa-zÅÅĞò,Óöµ½¿ÕÖµµÄ²ÎÊı²»²Î¼ÓÇ©Ãû¡£
+	 * åˆ›å»ºmd5æ‘˜è¦,è§„åˆ™æ˜¯:æŒ‰å‚æ•°åç§°a-zæ’åº,é‡åˆ°ç©ºå€¼çš„å‚æ•°ä¸å‚åŠ ç­¾åã€‚
 	 */
 	public String createSign(SortedMap<String, String> packageParams) {
 		StringBuffer sb = new StringBuffer();
@@ -252,10 +252,10 @@ public class RequestHandler {
 
 	}
 
-	// Ìá½»Ô¤Ö§¸¶
+	// æäº¤é¢„æ”¯ä»˜
 	public String sendPrepay(SortedMap packageParams) {
 		String prepayid = "";
-		// ×ª»»³Éjson
+		// è½¬æ¢æˆjson
 		Gson gson = new Gson();
 		/* String postData =gson.toJson(packageParams); */
 		String postData = "{";
@@ -272,7 +272,7 @@ public class RequestHandler {
 			}
 		}
 		postData += "}";
-		// ÉèÖÃÁ´½Ó²ÎÊı
+		// è®¾ç½®é“¾æ¥å‚æ•°
 		String requestUrl = this.gateUrl + "?access_token=" + this.Token;
 		System.out.println("post url=" + requestUrl);
 		System.out.println("post data=" + postData);
@@ -289,14 +289,14 @@ public class RequestHandler {
 			} else {
 				System.out.println("get token err ,info =" + map.get("errmsg"));
 			}
-			// ÉèÖÃdebug info
+			// è®¾ç½®debug info
 			System.out.println("res json=" + resContent);
 		}
 		return prepayid;
 	}
 
 	/**
-	 * ´´½¨packageÇ©Ãû
+	 * åˆ›å»ºpackageç­¾å
 	 */
 	public boolean createMd5Sign(String signParams) {
 		StringBuffer sb = new StringBuffer();
@@ -311,14 +311,14 @@ public class RequestHandler {
 			}
 		}
 
-		// Ëã³öÕªÒª
+		// ç®—å‡ºæ‘˜è¦
 		String enc = TenpayUtil.getCharacterEncoding(this.request,
 				this.response);
 		String sign = MD5Util.MD5Encode(sb.toString(), enc).toLowerCase();
 
 		String tenpaySign = this.getParameter("sign").toLowerCase();
 
-		// debugĞÅÏ¢
+		// debugä¿¡æ¯
 		this.setDebugInfo(sb.toString() + " => sign:" + sign + " tenpaySign:"
 				+ tenpaySign);
 
@@ -326,7 +326,7 @@ public class RequestHandler {
 	}
 
 	/**
-	 * ÉèÖÃdebugĞÅÏ¢
+	 * è®¾ç½®debugä¿¡æ¯
 	 */
 	protected void setDebugInfo(String debugInfo) {
 		this.debugInfo = debugInfo;

@@ -19,22 +19,22 @@ import cn.cobala.weixin.util.TenpayUtil;
 import cn.cobala.weixin.util.XMLUtil;
 
 /**
- * Î¢ĞÅÖ§¸¶·şÎñÆ÷Ç©ÃûÖ§¸¶ÇëÇóÓ¦´ğÀà
- * apiËµÃ÷£º 
- *  getKey()/setKey(),»ñÈ¡/ÉèÖÃÃÜÔ¿
- *  getParameter()/setParameter(),»ñÈ¡/ÉèÖÃ²ÎÊıÖµ getAllParameters(),»ñÈ¡ËùÓĞ²ÎÊı
- *  isTenpaySign(),ÊÇ·ñ²Æ¸¶Í¨Ç©Ãû,true:ÊÇ false:·ñ
- *   getDebugInfo(),»ñÈ¡debugĞÅÏ¢
+ * å¾®ä¿¡æ”¯ä»˜æœåŠ¡å™¨ç­¾åæ”¯ä»˜è¯·æ±‚åº”ç­”ç±»
+ * apiè¯´æ˜ï¼š 
+ *  getKey()/setKey(),è·å–/è®¾ç½®å¯†é’¥
+ *  getParameter()/setParameter(),è·å–/è®¾ç½®å‚æ•°å€¼ getAllParameters(),è·å–æ‰€æœ‰å‚æ•°
+ *  isTenpaySign(),æ˜¯å¦è´¢ä»˜é€šç­¾å,true:æ˜¯ false:å¦
+ *   getDebugInfo(),è·å–debugä¿¡æ¯
  */
 public class ResponseHandler {
 
-	/** ÃÜÔ¿ */
+	/** å¯†é’¥ */
 	private String key;
 
-	/** Ó¦´ğµÄ²ÎÊı */
+	/** åº”ç­”çš„å‚æ•° */
 	private SortedMap parameters;
 
-	/** debugĞÅÏ¢ */
+	/** debugä¿¡æ¯ */
 	private String debugInfo;
 
 	private HttpServletRequest request;
@@ -44,7 +44,7 @@ public class ResponseHandler {
 	private String uriEncoding;
 
 	/**
-	 * ¹¹Ôìº¯Êı
+	 * æ„é€ å‡½æ•°
 	 * 
 	 * @param request
 	 * @param response
@@ -71,24 +71,24 @@ public class ResponseHandler {
 	}
 
 	/**
-	 *»ñÈ¡ÃÜÔ¿
+	 *è·å–å¯†é’¥
 	 */
 	public String getKey() {
 		return key;
 	}
 
 	/**
-	 *ÉèÖÃÃÜÔ¿
+	 *è®¾ç½®å¯†é’¥
 	 */
 	public void setKey(String key) {
 		this.key = key;
 	}
 
 	/**
-	 * »ñÈ¡²ÎÊıÖµ
+	 * è·å–å‚æ•°å€¼
 	 * 
 	 * @param parameter
-	 *            ²ÎÊıÃû³Æ
+	 *            å‚æ•°åç§°
 	 * @return String
 	 */
 	public String getParameter(String parameter) {
@@ -97,12 +97,12 @@ public class ResponseHandler {
 	}
 
 	/**
-	 * ÉèÖÃ²ÎÊıÖµ
+	 * è®¾ç½®å‚æ•°å€¼
 	 * 
 	 * @param parameter
-	 *            ²ÎÊıÃû³Æ
+	 *            å‚æ•°åç§°
 	 * @param parameterValue
-	 *            ²ÎÊıÖµ
+	 *            å‚æ•°å€¼
 	 */
 	public void setParameter(String parameter, String parameterValue) {
 		String v = "";
@@ -113,7 +113,7 @@ public class ResponseHandler {
 	}
 
 	/**
-	 * ·µ»ØËùÓĞµÄ²ÎÊı
+	 * è¿”å›æ‰€æœ‰çš„å‚æ•°
 	 * 
 	 * @return SortedMap
 	 */
@@ -122,10 +122,10 @@ public class ResponseHandler {
 	}
 	public void doParse(String xmlContent) throws JDOMException, IOException {
 		this.parameters.clear();
-		//½âÎöxml,µÃµ½map
+		//è§£æxml,å¾—åˆ°map
 		Map m = XMLUtil.doXMLParse(xmlContent);
 		
-		//ÉèÖÃ²ÎÊı
+		//è®¾ç½®å‚æ•°
 		Iterator it = m.keySet().iterator();
 		while(it.hasNext()) {
 			String k = (String) it.next();
@@ -134,7 +134,7 @@ public class ResponseHandler {
 		}
 	}
 	/**
-	 * ÊÇ·ñ²Æ¸¶Í¨Ç©Ãû,¹æÔòÊÇ:°´²ÎÊıÃû³Æa-zÅÅĞò,Óöµ½¿ÕÖµµÄ²ÎÊı²»²Î¼ÓÇ©Ãû¡£
+	 * æ˜¯å¦è´¢ä»˜é€šç­¾å,è§„åˆ™æ˜¯:æŒ‰å‚æ•°åç§°a-zæ’åº,é‡åˆ°ç©ºå€¼çš„å‚æ•°ä¸å‚åŠ ç­¾åã€‚
 	 * 
 	 * @return boolean
 	 */
@@ -155,14 +155,14 @@ public class ResponseHandler {
 
 		sb.append("key=" + this.getKey());
 
-		// Ëã³öÕªÒª
+		// ç®—å‡ºæ‘˜è¦
 		String enc = TenpayUtil.getCharacterEncoding(this.request,
 				this.response);
 		String sign = MD5Util.MD5Encode(sb.toString(), enc).toLowerCase();
 
 		String tenpaySign = this.getParameter("sign").toLowerCase();
 
-		// debugĞÅÏ¢
+		// debugä¿¡æ¯
 		this.setDebugInfo(sb.toString() + " => sign:" + sign + " tenpaySign:"
 				+ tenpaySign);
 
@@ -170,10 +170,10 @@ public class ResponseHandler {
 	}
 
 	/**
-	 * ·µ»Ø´¦Àí½á¹û¸ø²Æ¸¶Í¨·şÎñÆ÷¡£
+	 * è¿”å›å¤„ç†ç»“æœç»™è´¢ä»˜é€šæœåŠ¡å™¨ã€‚
 	 * 
 	 * @param msg
-	 *            : Success or fail¡£
+	 *            : Success or failã€‚
 	 * @throws IOException
 	 */
 	public void sendToCFT(String msg) throws IOException {
@@ -186,7 +186,7 @@ public class ResponseHandler {
 	}
 
 	/**
-	 * »ñÈ¡uri±àÂë
+	 * è·å–uriç¼–ç 
 	 * 
 	 * @return String
 	 */
@@ -195,7 +195,7 @@ public class ResponseHandler {
 	}
 
 	/**
-	 * ÉèÖÃuri±àÂë
+	 * è®¾ç½®uriç¼–ç 
 	 * 
 	 * @param uriEncoding
 	 * @throws UnsupportedEncodingException
@@ -205,7 +205,7 @@ public class ResponseHandler {
 		if (!"".equals(uriEncoding.trim())) {
 			this.uriEncoding = uriEncoding;
 
-			// ±àÂë×ª»»
+			// ç¼–ç è½¬æ¢
 			String enc = TenpayUtil.getCharacterEncoding(request, response);
 			Iterator it = this.parameters.keySet().iterator();
 			while (it.hasNext()) {
@@ -218,13 +218,13 @@ public class ResponseHandler {
 	}
 
 	/**
-	 *»ñÈ¡debugĞÅÏ¢
+	 *è·å–debugä¿¡æ¯
 	 */
 	public String getDebugInfo() {
 		return debugInfo;
 	}
 	/**
-	 *ÉèÖÃdebugĞÅÏ¢
+	 *è®¾ç½®debugä¿¡æ¯
 	 */
 	protected void setDebugInfo(String debugInfo) {
 		this.debugInfo = debugInfo;

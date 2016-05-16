@@ -38,7 +38,6 @@ public class WxUtilEx {
 	
 	
 	public static void formatMapObject(Map map) {
-
 		Set es = map.entrySet();
 		Iterator it = es.iterator();
 		List<String> remove_key_list = new ArrayList<String>();
@@ -56,7 +55,6 @@ public class WxUtilEx {
 		for(String key : remove_key_list){
 			map.remove(key);
 		}
-		
 	}
 	
 	public static Map xmlString2Map(String xml) throws Exception {
@@ -171,7 +169,7 @@ public class WxUtilEx {
 		}
 
 		Format format = Format.getPrettyFormat();
-		format.setEncoding(CHARSET);//����xml�ļ����ַ�ΪUTF-8�������������
+		format.setEncoding(CHARSET);//解决中文乱码问题
 		XMLOutputter xmlout = new XMLOutputter(format);
 		ByteArrayOutputStream bo = new ByteArrayOutputStream();
 		xmlout.output(document, bo);
@@ -201,7 +199,7 @@ public class WxUtilEx {
 		formatMapObject(map);
 		String sign = makeSignWithMd5(map, key);
 
-		map.remove("key");//��ֹkey���洢
+		map.remove("key");//防止key被存储
 		map.put("sign", sign);
 	}
 
