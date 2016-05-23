@@ -1,5 +1,7 @@
 package cn.cobala.weixin;
 
+import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -7,14 +9,16 @@ import java.util.TreeMap;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
-
 import cn.cobala.weixin.util.WxUtilEx;
 
-
+/**
+ * 代码示例
+ * @author wang-lei
+ */
 public class PayTest {
 	
-	// 模拟统一下单
-	@Test
+	
+	@Test // 模拟统一下单示例
 	public void testUnifyOrder() throws Exception {
 		String appid = "";                    //公众号ID     微信分配的公众账号ID
 		String mch_id = "";                    //商户号              微信支付分配的商户号 
@@ -118,4 +122,41 @@ public class PayTest {
 		}
 		//------------------------APP端支付返回的数据结束-------------------------------
 	}
+	
+	@Test //接收微信通知示例
+	public void testReceiveWeixinNotify() {
+		
+		//需要微信分配的信息
+//		String key = "";    //微信appkey
+//		String appid = "";  //公众号ID     微信分配的公众账号ID
+//		String mch_id = ""; //商户号              微信支付分配的商户号 
+		
+		
+		//1.获取微信通知请求
+//		Map<String,String> result = WxUtilEx.requestStream2Map(request);
+		
+		//2.进行对返回的数据签名
+//		if(!WxUtilEx.checkMapSign(result, key)) {
+//			throw new Exception("接收微信异步通知返回的数据签名不正确：" + result.toString());
+//		}
+		
+		//3.校验返回数据是否为SUCCESS
+//		if("SUCCESS".equals(result.get("return_code")) && "SUCCESS".equals(result.get("result_code"))){
+//			//TODO 各种业务处理后,更新订单状态
+//				
+//				
+//				
+//		}else {
+//			throw new Exception("接收微信异步通知返回的数据异常：" + result.toString());
+//		}
+		
+		//4.返回成功的信息
+//		Map toWeixin = new HashMap();
+//		toWeixin.put("return_code", "SUCCESS");
+//		toWeixin.put("return_msg", "OK");
+//		
+//		return WxUtilEx.map2XmlString(toWeixin);
+		
+	}
+	
 }

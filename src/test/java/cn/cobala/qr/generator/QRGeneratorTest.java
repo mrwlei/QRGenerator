@@ -12,6 +12,10 @@ import org.junit.Test;
 
 import com.google.zxing.WriterException;
 
+/**
+ * 代码示例
+ * @author wang-lei
+ */
 public class QRGeneratorTest {
 	
 	@Test
