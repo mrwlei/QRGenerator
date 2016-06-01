@@ -3,6 +3,7 @@ package cn.cobala.weixin.util;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
@@ -57,7 +58,7 @@ public class WxUtilEx {
 	 * @throws Exception
 	 */
 	public static Map postOrderRefund(Map map) throws Exception {
-		return postXmlData(POST_URL_REFUND,map);
+		return postXmlDataForRefund(POST_URL_REFUND, map);
 	}
 	
 	public static void formatMapObject(Map map) {
@@ -241,30 +242,58 @@ public class WxUtilEx {
 		return compareSign(new_sign, old_sign);
 	}
 
-	public static Map postXmlData(String url, Map map) throws Exception {
+	private static Map postXmlData(String url, Map map) throws Exception {
 
 		Map<String, String> return_map = new HashMap();
 		
 		TenpayHttpClient thc = new TenpayHttpClient();
-		Field field = TenpayHttpClient.class.getDeclaredField("charset");
-		field.setAccessible(true);
-		field.set(thc, CHARSET);
+		
 		String post_data = map2XmlString(map);
 		
 		System.out.println("\n>>>>>> post_data \n" + post_data);
+		try {
+			if (thc.callHttpPost(url, post_data)) {
+				String return_data = thc.getResContent();
+				
+				System.out.println("\n>>>>>> return_data \n" + return_data);
+				
+				return_map = xmlString2Map(return_data);
+			}
+		} catch (Exception e) {
+			System.out.println("\n>>>>>> postXmlData error!!!-->" + e.getMessage() +" 请求的url--> "+ url);
+			throw e;
+		}
+		return return_map;
+	}
+	
+	private static Map postXmlDataForRefund(String url, Map map) throws Exception {
 
-		if (thc.callHttpPost(url, post_data)) {
-			String return_data = thc.getResContent();
-			
-			System.out.println("\n>>>>>> return_data \n" + return_data);
-			
-			return_map = xmlString2Map(return_data);
-		} else {
-			throw new Exception("postXmlData error!!! " + url);
+		Map<String, String> return_map = new HashMap();
+		
+		TenpayHttpClient thc = new TenpayHttpClient();
+		thc.setCaInfo(new File("")); //这里填写 ca 证书的路径
+		thc.setCertInfo(new File(""), ""); //这里填写 微信提供的秘钥 和 商户号
+		
+		String post_data = map2XmlString(map);
+		
+		System.out.println("\n>>>>>> refund_post_data \n" + post_data);
+
+		try {
+			if (thc.callHttpsPost(url, post_data)) {
+				String return_data = thc.getResContent();
+				
+				System.out.println("\n>>>>>> refund_return_data \n" + return_data);
+				
+				return_map = xmlString2Map(return_data);
+			} 
+		} catch (Exception e) {
+			System.out.println("\n>>>>>> postXmlDataForRefund error!!!-->" + e.getMessage() +" 请求的url--> "+ url);
+			throw e;
 		}
 
 		return return_map;
 	}
+	
 
 	public static String getCurrentTime() {
 		return TenpayUtil.getCurrTime();

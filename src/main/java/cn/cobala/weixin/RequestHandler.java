@@ -254,7 +254,7 @@ public class RequestHandler {
 	}
 
 	// 提交预支付
-	public String sendPrepay(SortedMap packageParams) {
+	public String sendPrepay(SortedMap packageParams) throws Exception{
 		String prepayid = "";
 		// 转换成json
 		Gson gson = new Gson();

@@ -95,7 +95,7 @@ public class TenpayHttpClient {
 		this.timeOut = 30;// 30秒
 
 		this.responseCode = 0;
-		this.charset = "GBK";
+		this.charset = "UTF-8";
 
 		this.inputStream = null;
 	}
@@ -243,7 +243,7 @@ public class TenpayHttpClient {
 
 	}
 
-	public boolean callHttpPost(String url, String postdata) {
+	public boolean callHttpPost(String url, String postdata) throws Exception{
 		boolean flag = false;
 		byte[] postData;
 		try {
@@ -251,7 +251,40 @@ public class TenpayHttpClient {
 			this.httpPostMethod(url, postData);
 			flag = true;
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			throw e1;
+		}
+		return flag;
+	}
+	
+	public boolean callHttpsPost(String url,String postdata) throws Exception{
+		// ca目录
+		String caPath = this.caFile.getParent();
+
+		File jksCAFile = new File(caPath + "/" + TenpayHttpClient.JKS_CA_FILENAME);
+		
+		if (!jksCAFile.isFile()) {
+			X509Certificate cert = (X509Certificate) HttpClientUtil.getCertificate(this.caFile);
+
+			FileOutputStream out = new FileOutputStream(jksCAFile);
+
+			// store jks file
+			HttpClientUtil.storeCACert(cert, TenpayHttpClient.JKS_CA_ALIAS,TenpayHttpClient.JKS_CA_PASSWORD, out);
+			out.close();
+		}
+
+		FileInputStream trustStream = new FileInputStream(jksCAFile);
+		FileInputStream keyStream = new FileInputStream(this.certFile);
+
+		SSLContext sslContext = HttpClientUtil.getSSLContext(trustStream,TenpayHttpClient.JKS_CA_PASSWORD, keyStream, this.certPasswd);
+		
+		boolean flag = false;
+		byte[] postData;
+		try {
+			postData = postdata.getBytes(this.charset);
+			this.httpsPostMethod(url, postData, sslContext);
+			flag = true;
+		} catch (IOException e1) {
+			throw e1;
 		}
 		return flag;
 	}
