@@ -18,43 +18,35 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 public class QRGenerator {
 	
 	private String contents;         //二维码信息
-	private String format = "png";   //二维码图片类型
+	private static String format = "png";   //二维码图片类型
 	
-	private int width = 400;
-	private int height = 400;
+	private static int width = 400;
+	private static int height = 400;
 	
-	private String unicode = "UTF-8";
+	private static String unicode = "UTF-8";
 	
 	private String logoClassPathURL; //图片logo的相对路径，添加在classpath下面
 	
 	
 	public QRGenerator(String contents) {
-		this.contents = contents;
+		this(contents,format,width,height,unicode,null);
 	}
 	
 	public QRGenerator(String contents,int width,int height) {
-		this.contents = contents;
-		this.width = width;
-		this.height = height;
+		this(contents,format,width,height,unicode,null);
 	}
 	
 	public QRGenerator(String contents, String logoClassPathURL) {
-		this.contents = contents;
-		this.logoClassPathURL = logoClassPathURL;
+		this(contents,format,width,height,unicode,logoClassPathURL);
 	}
 	
 	public QRGenerator(String contents, String format, String logoClassPathURL) {
-		this.contents = contents;
-		this.format = format;
-		this.logoClassPathURL = logoClassPathURL;
+		this(contents,format,width,height,unicode,logoClassPathURL);
 	}
 	
 	public QRGenerator(String contents, String format, String unicode,
 			String logoClassPathURL) {
-		this.contents = contents;
-		this.format = format;
-		this.unicode = unicode;
-		this.logoClassPathURL = logoClassPathURL;
+		this(contents,format,width,height,unicode,logoClassPathURL);
 	}
 
 	public QRGenerator(String contents, String format, int width, int height,

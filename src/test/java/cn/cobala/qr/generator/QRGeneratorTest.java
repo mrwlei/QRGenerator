@@ -35,7 +35,7 @@ public class QRGeneratorTest {
 //		qg.generateQRToFile(new File("F://aaa.png"));
 		
 		QRGenerator qg = new QRGenerator("扫一下，就会出现此内容偶。",260,260);
-		qg.generateQRToFile(new File("F://aaa.png"));
+		qg.generateQRToFile(new File("F://bbb.png"));
 		
 		/*返回字节数组示例*/
 //		QRGenerator qg = new QRGenerator("扫一下，就会出现此内容偶。",260,260);
